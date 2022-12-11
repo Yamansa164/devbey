@@ -8,7 +8,6 @@ import 'package:devbey/featuers/search/domain/usecase/get_cars_use_case.dart';
 import 'package:devbey/featuers/search/domain/usecase/get_cities_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../core/error/failuer.dart';
 
 part 'search_event.dart';
@@ -21,10 +20,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc() : super(SearchInitial()) {
     on<GetCitiesEvent>((event, emit) async {
       emit(LoadingState());
-      print('s');
       Either<Failuer, CitiesModel> successOrFailuer =
           await getCitiesUseCase.excute(input: Void);
-      print('s');
 
       successOrFailuer.fold(
           (faliuer) => emit(GetCitiesFaield(failuer: faliuer)), (citiesModel) {
@@ -34,18 +31,18 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
     on<GetCarsEvent>((event, emit) async {
       emit(LoadingState());
-      Either<Failuer, CarsModel> successOrFailuer =
-          await getCarsUseCase.excute(input: Void);
+      Either<Failuer, CarsModel> successOrFailuer = await getCarsUseCase.excute(
+          input: GetCarsInput(
+              location: getSelectedCityid,
+              dateFrom: dateFrom.text,
+              dateTo: dateTo.text,
+              page: '1'));
 
       successOrFailuer.fold((faliuer) {
         emit(GetCarsFaield(failuer: faliuer));
       }, (carsModel) {
-        print(carsModel.listCarModel.map((e) => e.brandName));
-        print(carsModel.listCarModel.map((e) => e.rentalPrice));
-        print(carsModel.listCarModel.map((e) => e.rentalPricePerDay));
 
-        print(carsModel.listCarModel.map((e) => e.photos));
-        listcarsModel=carsModel;
+        listcarsModel = carsModel;
         emit(GetCarsSuccess(carsModel: carsModel));
       });
     });
@@ -54,15 +51,21 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     return BlocProvider.of<SearchBloc>(context);
   }
 
-  String _selectedCity = '';
-  String get getSelectedCity => _selectedCity;
-  void setSelectedCity(String selectedCity) {
-    _selectedCity = selectedCity;
+  String _selectedCityid = '';
+  String get getSelectedCityid => _selectedCityid;
+  void setSelectedCityId(String selectedCityid) {
+    _selectedCityid = selectedCityid;
+  }
+
+   String _selectedCityname = '';
+  String get getSelectedCityname => _selectedCityname;
+  void setSelectedCityName(String selectedCityName) {
+    _selectedCityname = selectedCityName;
   }
 
   final TextEditingController dateFrom = TextEditingController();
 
   final TextEditingController dateTo = TextEditingController();
   final TextEditingController searchCity = TextEditingController();
-  CarsModel ?listcarsModel;
+  CarsModel? listcarsModel;
 }

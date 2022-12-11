@@ -1,6 +1,7 @@
 import 'package:devbey/core/di/di.dart';
 import 'package:devbey/featuers/login/presntiation/page/login_page.dart';
-import 'package:devbey/featuers/search/presntiation/page/search_page.dart';
+import 'package:devbey/featuers/profile/presntiation/page/profild_page.dart';
+import 'package:devbey/featuers/search/presntiation/page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,7 +15,7 @@ class Routes {
 }
 
 class RouteGenerator {
-  static Route<dynamic> getRoute(RouteSettings settings) {
+  static Route<dynamic> ?getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.loginPage:
         {
@@ -32,30 +33,26 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => SearchBloc(),
-            child: SearchPage(),
+            child: HomePage(),
           ),
         );
 
-      // case Routes.searchContract:
+      case Routes.profilePage:
+        return MaterialPageRoute(
+          builder: (_) => const ProfilePage(),
+        );
+
+      // default:
+      // searchDi();
       //   return MaterialPageRoute(
       //     builder: (_) => BlocProvider(
-      //       create: (context) => ContractBloc(),
-      //       child: const ContractPage(),
+      //       create: (context) => SearchBloc(),
+      //       child: HomePage(),
       //     ),
       //   );
-
-      default:
-        return unDefinedRoute();
     }
+    return null;
   }
 
-  static Route<dynamic> unDefinedRoute() {
-    return MaterialPageRoute(
-        builder: (_) => Scaffold(
-              appBar: AppBar(
-                title: const Text('Not Found'),
-              ),
-              body: const Center(child: Text('Not Found')),
-            ));
-  }
+  
 }

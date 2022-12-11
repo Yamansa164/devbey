@@ -20,12 +20,20 @@ class DropDownSearchWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: screen.width / 1.1,
-      child: DropdownSearch(
+      child: DropdownSearch<String>(
+        validator: (value) {
+          if (value==null) return 'this field is requierd';
+          return null;
+        },
         onChanged: (value) {
-          print(value);
-          bloc.setSelectedCity(value.toString());
+          String id = items.keys.firstWhere((element) {
+            return items[element] == value;
+          });
+ bloc.setSelectedCityName(value!);
+          bloc.setSelectedCityId(id.toString());
         },
         popupProps: PopupProps.menu(
+          showSelectedItems: true,
           showSearchBox: true,
           searchFieldProps: TextFieldProps(
             controller: bloc.searchCity,
@@ -33,17 +41,9 @@ class DropDownSearchWidget extends StatelessWidget {
         ),
         items: items
             .map((id, name) {
-              // print(id+'  '+name);
               return MapEntry(
                 id,
-                DropdownMenuItem<String>(
-                  onTap: (){
-                    print('object');
-                    print(id);
-                  },
-                  value: id,
-                  child: Text(name),
-                ).child
+                name,
               );
             })
             .values
@@ -64,8 +64,7 @@ class DropDownSearchWidget extends StatelessWidget {
               errorBorder: OutlineInputBorder(
                 gapPadding: 0,
                 borderSide: BorderSide(color: ColorManage.second),
-              )
-              ),
+              )),
         ),
       ),
     );

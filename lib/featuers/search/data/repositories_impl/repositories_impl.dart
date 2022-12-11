@@ -2,6 +2,7 @@ import 'package:devbey/core/network/network.dart';
 import 'package:devbey/core/error/failuer.dart';
 import 'package:dartz/dartz.dart';
 import 'package:devbey/featuers/search/data/datasource/remote_datasource.dart';
+import 'package:devbey/featuers/search/data/request/get_cars_request.dart';
 import 'package:devbey/featuers/search/data/response/cars_response.dart';
 import 'package:devbey/featuers/search/data/response/cities_response.dart';
 import 'package:devbey/featuers/search/domain/entites/cars_model.dart';
@@ -38,11 +39,11 @@ class SearchRepostitoriesImpl extends SearchRepostitories {
   }
 
   @override
-  Future<Either<Failuer, CarsModel>> getCar() async {
+  Future<Either<Failuer, CarsModel>> getCar({required GetCarsRequest getCarsRequest}) async {
     if (await networkInfo.isConnected) {
       try {
         final Either<Failuer, AllResponse> getSuccess =
-            await searchRemoteDataSource.getCars();
+            await searchRemoteDataSource.getCars(getCarsRequest: getCarsRequest);
 
         return getSuccess.fold((faliuer) {
 

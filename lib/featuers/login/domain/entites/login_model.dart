@@ -1,7 +1,6 @@
 class LoginModel {
   final String token;
   final String firstName;
-
   final String lastName;
   final String email;
   final String phoneNumber;

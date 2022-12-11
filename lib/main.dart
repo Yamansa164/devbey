@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return  const MaterialApp(
       debugShowCheckedModeBanner: false,
       onGenerateRoute: RouteGenerator.getRoute,
-      initialRoute: Routes.searchPage,
+      initialRoute: Routes.loginPage,
     );
   }
 }

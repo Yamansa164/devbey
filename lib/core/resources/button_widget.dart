@@ -4,19 +4,20 @@ import '../../featuers/login/presntiation/bloc/login_bloc.dart';
 import 'color_manager.dart';
 
 class ButtonWidget extends StatelessWidget {
-  const ButtonWidget(
+   const ButtonWidget(
       {Key? key,
       required this.screen,
       required this.ontap,
       required this.title,
       required this.height,
-      required this.width})
+      required this.width, required this.color})
       : super(key: key);
 
   final Size screen;
   final String title;
   final double height;
   final double width;
+  final Color color;
   final void Function() ontap;
 
   @override
@@ -28,13 +29,13 @@ class ButtonWidget extends StatelessWidget {
         width: screen.width / width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(screen.width / 5)),
-          color: ColorManage.primery,
+          color: color,
         ),
         child: Center(
             child: Text(
           title,
           style: TextStyle(
-              color: ColorManage.white,
+              color: color==ColorManage.white?   ColorManage.primery:ColorManage.white,
               fontWeight: FontWeight.w300,
               fontSize: screen.width / 18),
         )),

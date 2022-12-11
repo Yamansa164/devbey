@@ -26,7 +26,7 @@ class DatePickerWidget extends StatelessWidget {
         controller: controller,
         type: DateTimePickerType.dateTime,
         validator: (value) {
-          if (value!.isEmpty) return 'الرجاء ادخل التاريخ';
+          if (value!.isEmpty) return 'this field is requierd';
           return null;
         },
         decoration: InputDecoration(

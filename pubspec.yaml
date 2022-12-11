@@ -43,10 +43,9 @@ dependencies:
   date_time_picker: ^2.1.0
   get_it: ^7.2.0
   data_connection_checker_nulls: ^0.0.2
-  # shared_preferences: ^0.5.5
   http: ^0.13.5
   dropdown_search: ^5.0.5
-
+  # shared_preferences: ^2.0.15
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -71,6 +70,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - asset/json/search.json 
     - asset/json/car.json 
     - asset/json/loading.json 
     - asset/json/error.json 

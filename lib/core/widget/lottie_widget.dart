@@ -42,6 +42,7 @@ class LottieWidget extends StatelessWidget {
             lottie == AssetJsonManage.loading
                 ? const SizedBox()
                 : ButtonWidget(
+                  color: ColorManage.primery,
                     height: 17,
                     width: 4,
                     ontap: onPressed,
