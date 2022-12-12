@@ -44,9 +44,6 @@ class LoginPage extends StatelessWidget {
                           height: screen.height / 6),
                     ),
                   ),
-                  SizedBox(
-                    height: screen.height / 6,
-                  ),
                   BlocConsumer<LoginBloc, LoginState>(
                     listener: (context, state) {
                       if (state is LoginSuccess) {
@@ -58,7 +55,8 @@ class LoginPage extends StatelessWidget {
                       return BlocBuilder<LoginBloc, LoginState>(
                         builder: (context, state) {
                           if (state is LoginInitial) {
-                            return LoginWidget(screen: screen, bloc: bloc, formKey: _formKey);
+                            return LoginWidget(
+                                screen: screen, bloc: bloc, formKey: _formKey);
                           } else if (state is LoadingState) {
                             return LottieWidget(
                                 text: 'loading...',
@@ -74,10 +72,17 @@ class LoginPage extends StatelessWidget {
                                 },
                                 screen: screen);
                           }
+                          else if (state is LoginSuccess) {
+                            return Container();
+                          }
+                          
+
                           return LottieWidget(
                               text: 'something happen wrong',
                               lottie: AssetJsonManage.car,
-                              onPressed: () {},
+                              onPressed: () {
+                                bloc.add(GoToLoginInitial());
+                              },
                               screen: screen);
                         },
                       );

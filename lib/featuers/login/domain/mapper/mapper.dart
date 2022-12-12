@@ -1,10 +1,12 @@
 import 'package:devbey/featuers/login/data/response/login_response.dart';
 import 'package:devbey/featuers/login/domain/entites/login_model.dart';
 import 'package:http/retry.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 extension LoginResponseToModel on LoginResponse? {
   LoginModel toModel() {
     return LoginModel(
+      photo: this!.user!.customer!.photo?? '',
         token: this!.token ?? '',
         firstName: this!.user!.customer!.name ?? '',
         lastName: this!.user!.customer!.surname ?? '',
@@ -19,3 +21,4 @@ extension LoginResponseToModel on LoginResponse? {
         additonalPhone: this!.user!.customer!.birthPlace ?? '');
   }
 }
+////

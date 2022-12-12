@@ -1,3 +1,5 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 class LoginModel {
   final String token;
   final String firstName;
@@ -11,6 +13,8 @@ class LoginModel {
   final String birthDate;
   final String birthPlace;
   final String additonalPhone;
+    final String photo;
+
 
   LoginModel({
     required this.token,
@@ -24,5 +28,10 @@ class LoginModel {
       required this.nationality,
       required this.birthDate,
       required this.birthPlace,
-      required this.additonalPhone});
+      required this.additonalPhone,required this.photo});
+
+
+
+
+
 }

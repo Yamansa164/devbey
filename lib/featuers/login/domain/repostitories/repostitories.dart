@@ -5,4 +5,5 @@ import 'package:devbey/featuers/login/domain/entites/login_model.dart';
 abstract class LoginRepostitories {
   Future<Either<Failuer, LoginModel>> login(
       {required String email, required String password});
+  void setUserInfo({required LoginModel loginModel});
 }

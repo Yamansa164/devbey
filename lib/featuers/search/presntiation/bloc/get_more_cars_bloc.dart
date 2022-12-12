@@ -20,19 +20,16 @@ class GetMoreCarsBloc extends Bloc<BlocEvent, BlocState> {
   }
 
   int page = 1;
-  bool hasMorePage = true;
   bool loader = false;
   final ScrollController controller = ScrollController();
 
   Future<void> addListener() async {
     if (controller.position.pixels == controller.position.maxScrollExtent &&
-        loader == false &&
-        hasMorePage == true) {
+        loader == false ) {
       loader = true;
       emit(GetMoreCarsLoading());
 
       page++;
-      print(page);
       Either<Failuer, CarsModel> successOrFailuer = await getCarsUseCase.excute(
           input: GetCarsInput(
               location: bloc.getSelectedCityid,
@@ -48,6 +45,5 @@ class GetMoreCarsBloc extends Bloc<BlocEvent, BlocState> {
         loader = false;
       });
     }
-    // print('dont call');
   }
 }

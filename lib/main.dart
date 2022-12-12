@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'core/bloc/bloc_observer.dart';
 import 'core/resources/route_manger.dart';
 
-void main()async {
-    Bloc.observer = MyBlocObserver();
+void main() async {
+  Bloc.observer = MyBlocObserver();
 
-    WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await initDi();
   runApp(const MyApp());
 }
@@ -19,10 +19,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  const MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       onGenerateRoute: RouteGenerator.getRoute,
-      initialRoute: Routes.searchPage,
+      initialRoute: Routes.firstPage,
     );
   }
 }

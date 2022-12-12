@@ -88,6 +88,7 @@ class HomePage extends StatelessWidget {
                         buttonName: 'retry',
                         screen: screen);
                   } else if (state is GetCarsFaield) {
+                    
                     return LottieWidget(
                         text: state.failuer.message,
                         lottie: AssetJsonManage.error,

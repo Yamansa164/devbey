@@ -1,12 +1,11 @@
 import 'package:devbey/core/resources/asset_manager.dart';
 import 'package:devbey/core/resources/color_manager.dart';
-import 'package:devbey/featuers/search/domain/entites/cars_model.dart';
 import 'package:devbey/featuers/search/presntiation/bloc/get_more_cars_bloc.dart';
 import 'package:devbey/featuers/search/presntiation/widget/car_details_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/resources/route_manger.dart';
 import '../bloc/search_bloc.dart';
 

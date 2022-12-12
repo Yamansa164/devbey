@@ -56,16 +56,14 @@ class SearchRemoteDataSourceImpl extends SearchRemoteDataSource {
       );
 
       final body = jsonDecode(response.body);
-      if (body['data']['data'] != null) {
-        print('x');
-
-        if (response.statusCode == 200) {
+      if (response.statusCode == 200) {
+        if (body['data']['data'] != null) {
           return Right(AllResponse.fromJson(jsonDecode(response.body)));
         } else {
-          return Left(Failuer(message: body['error']['message']));
+          return  Left(Failuer(message: 'No More Data')) ;
         }
       } else {
-        return Left(Failuer(message: 'No More Data'));
+        return Left(Failuer(message: body['error']['message']));
       }
     } catch (e) {
       return Left(ServerFailure());

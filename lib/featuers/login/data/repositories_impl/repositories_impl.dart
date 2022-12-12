@@ -1,3 +1,4 @@
+import 'package:devbey/core/data/local_data_source.dart';
 import 'package:devbey/core/network/network.dart';
 import 'package:devbey/featuers/login/data/datasource/remote_datasource.dart';
 import 'package:devbey/featuers/login/data/response/login_response.dart';
@@ -11,9 +12,10 @@ import '../../../../core/error/execption.dart';
 
 class LoginRepostitoriesImpl extends LoginRepostitories {
   final LoginRemoteDataSource loginRemoteDataSource;
+  final LocalDataSource localDataSource;
   final NetworkInfo networkInfo;
   LoginRepostitoriesImpl(
-      {required this.loginRemoteDataSource, required this.networkInfo});
+      {required this.loginRemoteDataSource, required this.networkInfo,required this.localDataSource});
   @override
   Future<Either<Failuer, LoginModel>> login(
       {required String email, required String password}) async {
@@ -33,5 +35,10 @@ class LoginRepostitoriesImpl extends LoginRepostitories {
     } else {
       return left(NoInternetFailure());
     }
+  }
+  
+  @override
+  void setUserInfo({required LoginModel loginModel}) {
+    localDataSource.setUserInfo(loginModel: loginModel);
   }
 }

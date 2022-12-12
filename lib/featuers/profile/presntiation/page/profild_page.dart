@@ -1,11 +1,16 @@
+import 'package:devbey/core/data/local_data_source.dart';
+import 'package:devbey/core/di/di.dart';
 import 'package:devbey/core/resources/button_widget.dart';
+import 'package:devbey/core/resources/route_manger.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/resources/asset_manager.dart';
 import '../../../../core/resources/color_manager.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
-
+  ProfilePage({super.key});
+  final SharedPreferences pref = instance<SharedPreferences>();
+     
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
@@ -43,19 +48,31 @@ class ProfilePage extends StatelessWidget {
                       child: CircleAvatar(
                         backgroundColor: Colors.grey.shade500,
                         radius: screen.height / 9,
-                        backgroundImage: NetworkImage(
-                            'https://test.devbey.com/api/assets?src=car/February2022/P5U15YXQJerQJO5IxFIQ.png'),
+                        backgroundImage: pref.getString('photo') == ''
+                            ? null
+                            : NetworkImage('${pref.getString('photo')}'),
+                        child: pref.getString('photo') == ''
+                            ? Icon(
+                                Icons.person,
+                                color: ColorManage.primery,
+                                size: screen.height / 6,
+                              )
+                            : null,
                       ),
                     ),
                   ],
                 ),
                 Text(
-                  'Yaman Sakka',
+                  pref.getString('firstName') == ''
+                      ? ' Unknow'
+                      : '${pref.getString('firstName')} ${pref.getString('lastName')}',
                   style: TextStyle(
                       fontSize: screen.height / 30, color: ColorManage.primery),
                 ),
                 Text(
-                  'www.sakka@gmail.com',
+                  pref.getString('email') == ''
+                      ? ' Unknow'
+                      : '${pref.getString('email')}',
                   style: TextStyle(
                       fontSize: screen.height / 60, color: ColorManage.primery),
                 ),
@@ -88,7 +105,7 @@ class ProfilePage extends StatelessWidget {
                         color: ColorManage.primery,
                       ),
                       title: Text(
-                        'Phone Number: +963951420970',
+                        'Phone Number: ${pref.getString('phoneCode')} ${pref.getString('phone')}  ',
                         style: TextStyle(
                             color: ColorManage.primery, fontSize: fontSize),
                       ),
@@ -100,7 +117,9 @@ class ProfilePage extends StatelessWidget {
                         color: ColorManage.primery,
                       ),
                       title: Text(
-                        'Address : Damascus',
+                        pref.getString('address') == ''
+                            ? 'Address : Unknow'
+                            : 'Address : ${pref.getString('address')}',
                         style: TextStyle(
                             color: ColorManage.primery, fontSize: fontSize),
                       ),
@@ -112,7 +131,9 @@ class ProfilePage extends StatelessWidget {
                         color: ColorManage.primery,
                       ),
                       title: Text(
-                        'Nationality : Damascus',
+                        pref.getString('nationality') == ''
+                            ? 'Nationality : Unknow'
+                            : 'Nationality : ${pref.getString('nationality')}',
                         style: TextStyle(
                             color: ColorManage.primery, fontSize: fontSize),
                       ),
@@ -124,7 +145,9 @@ class ProfilePage extends StatelessWidget {
                         color: ColorManage.primery,
                       ),
                       title: Text(
-                        'BirthDate : 22-10-2001',
+                        pref.getString('birthDate') == ''
+                            ? 'BirthDate : Unknow'
+                            : 'BirthDate : ${pref.getString('birthDate')}',
                         style: TextStyle(
                             color: ColorManage.primery, fontSize: fontSize),
                       ),
@@ -141,7 +164,11 @@ class ProfilePage extends StatelessWidget {
                 ),
                 ButtonWidget(
                     screen: screen,
-                    ontap: () {},
+                    ontap: () {
+                      pref.remove('token');
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, Routes.loginPage, (route) => false);
+                    },
                     title: 'Log out',
                     height: 12,
                     width: 2,

@@ -43,9 +43,10 @@ dependencies:
   date_time_picker: ^2.1.0
   get_it: ^7.2.0
   data_connection_checker_nulls: ^0.0.2
+  # flutter_secure_storage: ^7.0.1
   http: ^0.13.5
   dropdown_search: ^5.0.5
-  # shared_preferences: ^2.0.15
+  shared_preferences: ^2.0.15
   # get_storage: ^2.0.3
 dev_dependencies:
   flutter_test:

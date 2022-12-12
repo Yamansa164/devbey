@@ -7,12 +7,12 @@ import '../../../../core/widget/drop_down_search_widget.dart';
 import '../bloc/search_bloc.dart';
 
 class SearchWidget extends StatelessWidget {
-   SearchWidget({
+  SearchWidget({
     Key? key,
     required this.screen,
     required this.bloc,
     required this.state,
-  })  :super(key: key);
+  }) : super(key: key);
 
   final Size screen;
   final SearchBloc bloc;
@@ -47,10 +47,8 @@ class SearchWidget extends StatelessWidget {
               screen: screen,
               bloc: bloc,
               items: Map.fromIterables(
-                  state.citiesModel.citiesModel
-                      .map((e) => e.id.toString()),
-                  state.citiesModel.citiesModel
-                      .map((e) => e.name)),
+                  state.citiesModel.citiesModel.map((e) => e.id.toString()),
+                  state.citiesModel.citiesModel.map((e) => e.name)),
             ),
             SizedBox(
               height: screen.height / 20,
@@ -60,11 +58,8 @@ class SearchWidget extends StatelessWidget {
                 screen: screen,
                 ontap: () async {
                   if (_formKey.currentState!.validate()) {
-                      bloc.add(GetCarsEvent());
-                    
+                    bloc.add(GetCarsEvent());
                   }
-                print(bloc.dateFrom.text);
-
                 },
                 title: 'Find Car',
                 height: 12,

@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:devbey/core/di/di.dart';
 import 'package:devbey/featuers/login/domain/entites/login_model.dart';
 import 'package:devbey/featuers/login/domain/usecase/login_usecase.dart';
+import 'package:devbey/featuers/login/domain/usecase/save_info_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
@@ -15,6 +16,7 @@ part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginUseCase loginUseCase = instance<LoginUseCase>();
+  SaveInfoUseCase saveInfoUseCase=instance<SaveInfoUseCase>();
   LoginBloc() : super(LoginInitial()) {
     on<LoginExcute>((event, emit) async {
       emit(LoadingState());
@@ -22,6 +24,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           input: LoginInput(email: email.text, password: password.text));
       successOrFailuer.fold((faliuer) => emit(LoginFaield(failuer: faliuer)),
           (loginModel) {
+            saveInfoUseCase.excute(input: loginModel);
         emit(LoginSuccess());
        
       });
