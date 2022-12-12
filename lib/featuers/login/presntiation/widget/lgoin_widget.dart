@@ -52,7 +52,10 @@ class LoginWidget extends StatelessWidget {
             hidden: true,
             icon: Icons.lock,
             validator: (val) {
-              if (val!.length <= 8) {
+              print(val);
+              print(val!.length);
+
+              if (val.length < 8) {
                 return 'Enter valid password';
               }
             },
