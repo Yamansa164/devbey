@@ -3,15 +3,19 @@ import 'package:devbey/core/resources/button_widget.dart';
 import 'package:devbey/core/resources/color_manager.dart';
 import 'package:devbey/featuers/search/presntiation/bloc/search_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../core/di/di.dart';
 
 class CarDetailWidget extends StatelessWidget {
-  const CarDetailWidget({
+   CarDetailWidget({
     super.key,
     required this.pricePerDay,
     required this.totalPrice,
     required this.urlImage,
     required this.bloc,required this.day
   });
+  final SharedPreferences pref = instance<SharedPreferences>();
 
   final String urlImage;
   final String day;
@@ -77,7 +81,7 @@ class CarDetailWidget extends StatelessWidget {
                           color: ColorManage.primery,
                         ),
                         title: Text(
-                          'www.sakka@gamil.com',
+                          '${pref.getString('email')}',
                           style: TextStyle(color: ColorManage.primery,fontSize: fontSize),
                         ),
                       ),
@@ -91,7 +95,7 @@ class CarDetailWidget extends StatelessWidget {
                                 color: ColorManage.primery,
                               ),
                               title: Text(
-                                'Yaman',
+                                '${pref.getString('firstName')} ',
                                 style: TextStyle(color: ColorManage.primery,fontSize: fontSize),
                               ),
                             ),
@@ -105,7 +109,7 @@ class CarDetailWidget extends StatelessWidget {
                                 color: ColorManage.primery,
                               ),
                               title: Text(
-                                '+963951420970',
+                                ' ${pref.getString('phoneCode')} ${pref.getString('phone')}  ',
                                 style: TextStyle(color: ColorManage.primery,fontSize: fontSize),
                               ),
                             ),
