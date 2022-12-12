@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../../core/resources/asset_manager.dart';
+import '../bloc/get_more_cars_bloc.dart';
 import '../widget/search_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -49,14 +50,16 @@ class HomePage extends StatelessWidget {
                       height: screen.height / 6),
                 ),
               ),
-              BlocConsumer<SearchBloc, SearchState>(
+              BlocConsumer<SearchBloc, BlocState>(
                 listener: (context, state) {
                   if (state is GetCarsSuccess) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                CarsWidget(screen: screen, bloc: bloc)));
+                            builder: (context) => BlocProvider(
+                                  create: (context) => GetMoreCarsBloc(bloc: bloc),
+                                  child: CarsWidget(screen: screen, bloc: bloc),
+                                )));
                     bloc.add(GetCitiesEvent());
                   }
                 },

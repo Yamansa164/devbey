@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:dartz/dartz.dart';
 import 'package:devbey/core/di/di.dart';
 import 'package:devbey/featuers/search/domain/entites/cars_model.dart';
@@ -9,11 +8,10 @@ import 'package:devbey/featuers/search/domain/usecase/get_cities_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/error/failuer.dart';
-
 part 'search_event.dart';
 part 'search_state.dart';
 
-class SearchBloc extends Bloc<SearchEvent, SearchState> {
+class SearchBloc extends Bloc<BlocEvent, BlocState> {
   GetCitiesUseCase getCitiesUseCase = instance<GetCitiesUseCase>();
   GetCarsUseCase getCarsUseCase = instance<GetCarsUseCase>();
 
@@ -36,14 +34,13 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
               location: getSelectedCityid,
               dateFrom: dateFrom.text,
               dateTo: dateTo.text,
-              page: '1'));
+              page: 0));
 
       successOrFailuer.fold((faliuer) {
         emit(GetCarsFaield(failuer: faliuer));
       }, (carsModel) {
-
-        listcarsModel = carsModel;
-        emit(GetCarsSuccess(carsModel: carsModel));
+        listcarsModel= carsModel;
+        emit(GetCarsSuccess());
       });
     });
   }
@@ -57,7 +54,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     _selectedCityid = selectedCityid;
   }
 
-   String _selectedCityname = '';
+  String _selectedCityname = '';
   String get getSelectedCityname => _selectedCityname;
   void setSelectedCityName(String selectedCityName) {
     _selectedCityname = selectedCityName;
@@ -67,5 +64,5 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   final TextEditingController dateTo = TextEditingController();
   final TextEditingController searchCity = TextEditingController();
-  CarsModel? listcarsModel;
+  CarsModel ?listcarsModel;
 }

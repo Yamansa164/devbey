@@ -2,7 +2,7 @@ class GetCarsRequest {
   final String location;
   final String dateFrom;
   final String dateTo;
-  final String page;
+  final int page;
 
   GetCarsRequest(
       {required this.location,

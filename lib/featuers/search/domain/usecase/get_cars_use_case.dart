@@ -18,7 +18,7 @@ class GetCarsInput{
 final String location;
   final String dateFrom;
   final String dateTo;
-  final String page;
+  final int page;
 
   GetCarsInput(
       {required this.location,

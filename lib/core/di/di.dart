@@ -41,6 +41,7 @@ void loginDi() async {
 }
 
 void searchDi() async {
+  
   if (!GetIt.I.isRegistered<GetCitiesUseCase>()) {
     //// usecase
     instance.registerFactory<GetCitiesUseCase>(() =>

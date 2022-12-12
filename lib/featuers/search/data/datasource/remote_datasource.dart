@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:dartz/dartz.dart';
 import 'package:devbey/core/error/failuer.dart';
@@ -11,7 +12,8 @@ import '../../../../core/resources/const_manager.dart';
 
 abstract class SearchRemoteDataSource {
   Future<Either<Failuer, CitiesResponse>> getCities();
-  Future<Either<Failuer, AllResponse>> getCars({required GetCarsRequest getCarsRequest});
+  Future<Either<Failuer, AllResponse>> getCars(
+      {required GetCarsRequest getCarsRequest});
 }
 
 class SearchRemoteDataSourceImpl extends SearchRemoteDataSource {
@@ -39,33 +41,33 @@ class SearchRemoteDataSourceImpl extends SearchRemoteDataSource {
   }
 
   @override
-  Future<Either<Failuer, AllResponse>> getCars({required GetCarsRequest getCarsRequest}) async {
+  Future<Either<Failuer, AllResponse>> getCars(
+      {required GetCarsRequest getCarsRequest}) async {
     Map<String, String> headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
 
     try {
-      print('xxxxxxxxxxxx');
       final http.Response response = await http.get(
         Uri.parse(
-            '${ConstManage.url}/cars/non-reserved?receiving_location=${getCarsRequest.location}&delivering_location=${getCarsRequest.location}&to=${getCarsRequest.dateTo}&deliver_to_different_location=false&page=1&limit=5&from=${getCarsRequest.dateFrom}'),
+            '${ConstManage.url}/cars/non-reserved?receiving_location=${getCarsRequest.location}&delivering_location=${getCarsRequest.location}&to=${getCarsRequest.dateTo}&deliver_to_different_location=false&page=${getCarsRequest.page}&limit=9&from=${getCarsRequest.dateFrom}'),
         headers: headers,
       );
 
-        final body = jsonDecode(response.body);
-        print('objectczxcz');
-      if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      if (body['data']['data'] != null) {
         print('x');
-        print(body['data']['data'][3]['photos']);
-        return Right(AllResponse.fromJson(jsonDecode(response.body)));
+
+        if (response.statusCode == 200) {
+          return Right(AllResponse.fromJson(jsonDecode(response.body)));
+        } else {
+          return Left(Failuer(message: body['error']['message']));
+        }
       } else {
-      
-        print(body['error']['message']);
-        return Left(Failuer(message: body['error']['message']));
+        return Left(Failuer(message: 'No More Data'));
       }
     } catch (e) {
-      print(e);
       return Left(ServerFailure());
     }
   }
